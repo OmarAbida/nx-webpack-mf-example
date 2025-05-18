@@ -1,0 +1,23 @@
+{
+  "name": "nx-webpack-mf-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean:dist": "rimraf dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.10.0",
+  "devDependencies": {
+    "@nx/react": "21.0.3",
+    "@nx/webpack": "^21.0.3",
+    "nx": "^21.0.3",
+    "rimraf": "^6.0.1"
+  },
+  "dependencies": {
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}

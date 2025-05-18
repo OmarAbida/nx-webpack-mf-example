@@ -1,0 +1,11 @@
+node_modules
+pnpm-lock.yaml
+
+.nx/cache
+.nx/workspace-data
+
+**node_modules
+**dist
+**@mf-types
+
+**tmp

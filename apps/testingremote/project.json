@@ -1,0 +1,93 @@
+{
+    "name": "testingremote",
+    "sourceRoot": "apps/testingremote",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nx/webpack:webpack",
+            "outputs": ["{workspaceRoot}/dist/testingremote"],
+            "defaultConfiguration": "development",
+            "dependsOn": ["types:emit"],
+            "configurations": {
+                "development": {
+                    "extractLicenses": false,
+                    "optimization": false,
+                    "sourceMap": true,
+                    "vendorChunk": true
+                },
+                "production": {
+                    "fileReplacements": [
+                        {
+                            "replace": "{projectRoot}/environments/environment.ts",
+                            "with": "{projectRoot}/environments/environment.prod.ts"
+                        }
+                    ],
+                    "optimization": true,
+                    "outputHashing": "all",
+                    "sourceMap": false,
+                    "namedChunks": false,
+                    "extractLicenses": true,
+                    "vendorChunk": false,
+                    "webpackConfig": "{projectRoot}/webpack.config.ts",
+                    "tsConfig": "{projectRoot}/tsconfig.build.json"
+                }
+            },
+            "options": {
+                "open": true,
+                "outputPath": "{workspaceRoot}/dist/testingremote",
+                "main": "{projectRoot}/src/main.tsx",
+                "index": "{projectRoot}/src/index.html",
+                "tsConfig": "{projectRoot}/tsconfig.build.json",
+                "scripts": [],
+                "webpackConfig": "{projectRoot}/webpack.config.ts",
+                "babelConfig": "{projectRoot}/.babelrc",
+                "deleteOutputPath": false
+            },
+            "cache": true
+        },
+        "serve": {
+            "executor": "@nx/react:module-federation-dev-server",
+            "defaultConfiguration": "development",
+            "configurations": {
+                "production": {
+                    "buildTarget": "testingremote:build:production"
+                },
+                "development": {
+                    "buildTarget": "testingremote:build:development"
+                }
+            },
+            "options": {
+                "port": 12000,
+                "publicHost": "http://localhost:12000",
+                "staticRemotesPort": 12001,
+                "static": true
+            }
+        },
+        "types:emit": {
+            "executor": "nx:run-commands",
+            "outputs": ["{workspaceRoot}/dist/testingremote"],
+            "options": {
+                "command": "npx tsc --emitDeclarationOnly -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+                "cwd": "{projectRoot}"
+            },
+            "cache": true
+        },
+        "serve-static": {
+            "executor": "@nx/web:file-server",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "testingremote:build",
+                "port": 12000
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "testingremote:build:development"
+                },
+                "production": {
+                    "buildTarget": "testingremote:build:production"
+                }
+            }
+        }
+    }
+}
