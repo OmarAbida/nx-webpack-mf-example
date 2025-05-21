@@ -1,0 +1,97 @@
+{
+    "name": "host",
+    "sourceRoot": "apps/host",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "implicitDependencies": ["remoteOne", "remoteTwo"],
+    "targets": {
+        "build": {
+            "executor": "@nx/webpack:webpack",
+            "metadata": {
+                "description": "Build the current application"
+            },
+            "outputs": ["{workspaceRoot}/dist/host"],
+            "defaultConfiguration": "production",
+            "dependsOn": ["types:emit"],
+            "configurations": {
+                "development": {
+                    "extractLicenses": false,
+                    "optimization": false,
+                    "sourceMap": true,
+                    "vendorChunk": true
+                },
+                "production": {
+                    "fileReplacements": [
+                        {
+                            "replace": "{projectRoot}/environments/environment.ts",
+                            "with": "{projectRoot}/environments/environment.prod.ts"
+                        }
+                    ],
+                    "optimization": true,
+                    "outputHashing": "all",
+                    "sourceMap": false,
+                    "namedChunks": false,
+                    "extractLicenses": true,
+                    "vendorChunk": false,
+                    "webpackConfig": "{projectRoot}/webpack.config.ts",
+                    "tsConfig": "{projectRoot}/tsconfig.build.json"
+                }
+            },
+            "options": {
+                "open": true,
+                "outputPath": "{workspaceRoot}/dist/host",
+                "main": "{projectRoot}/src/main.tsx",
+                "index": "{projectRoot}/src/index.html",
+                "tsConfig": "{projectRoot}/tsconfig.build.json",
+                "webpackConfig": "{projectRoot}/webpack.config.ts",
+                "babelConfig": "{projectRoot}/.babelrc",
+                "deleteOutputPath": false
+            },
+            "cache": true
+        },
+        "serve": {
+            "executor": "@nx/react:module-federation-dev-server",
+            "metadata": {
+                "description": "Serve the remotes applications"
+            },
+            "defaultConfiguration": "development",
+            "configurations": {
+                "development": {
+                    "buildTarget": "host:build:development"
+                },
+                "production": {
+                    "buildTarget": "host:build:production"
+                }
+            },
+            "options": {
+                "port": 8000,
+                "publicHost": "http://localhost:8000",
+                "staticRemotesPort": 8001,
+                "skipRemotes": ["host"]
+            }
+        },
+        "types:emit": {
+            "executor": "nx:run-commands",
+            "metadata": {
+                "description": "Generates the current project type definitions"
+            },
+            "outputs": ["{workspaceRoot}/dist/host"],
+            "options": {
+                "command": "npx tsc --emitDeclarationOnly -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+                "cwd": "{projectRoot}"
+            },
+            "cache": true
+        },
+        "types:fetch-remote": {
+            "executor": "nx:run-commands",
+            "metadata": {
+                "description": "Fetch remote micro-frontends type definitions"
+            },
+            "outputs": ["{projectRoot}/@mf-types"],
+            "options": {
+                "command": "npx mf dts -c ./mf-types-generator.ts && rimraf .mf",
+                "cwd": "{projectRoot}"
+            }
+        }
+    }
+}

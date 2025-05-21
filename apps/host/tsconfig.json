@@ -1,0 +1,22 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "rootDir": ".",
+        "baseUrl": ".",
+        "module": "ESNext",
+        "strict": false,
+        "outDir": "../../dist/host",
+        "declarationDir": "../../dist/host/@mf-types",
+        "paths": {
+            "@env/*": ["./environments/*"],
+            "@src/*": ["./src/*"],
+            "host/*": ["./src/FederationSharing/*"],
+            "remoteOne/*": ["./@mf-types/remoteOne/src/FederationSharing/*"],
+            "remoteTwo/*": ["./@mf-types/remoteTwo/src/FederationSharing/*"],
+            "remoteThree/*": ["./@mf-types/remoteThree/src/FederationSharing/*"]
+        },
+        "types": ["node", "react", "react-dom"]
+    },
+    "include": ["./src/**/*"],
+    "exclude": ["node_modules", "dist"]
+}
