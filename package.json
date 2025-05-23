@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "clean:dist": "rimraf dist"
+        "clean:dist": "rimraf dist",
+        "test": "echo 'Hello world!' > test-result.txt"
     },
     "keywords": [],
     "author": "",
