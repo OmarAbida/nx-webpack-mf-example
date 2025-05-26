@@ -10,13 +10,11 @@
     "scripts": {
         "build:dev": "nx build --configuration=development",
         "build:prod": "nx build --configuration=production",
-        "clean:dist": "rimraf dist",
-        "clean:all": "rimraf dist && rimraf @mf-types",
         "clean:mf-types": "rimraf @mf-types",
-        "types:fetch-remote": "nx types:fetch-remote",
-        "types:emit": "nx types:emit",
+        "serve": "nx serve",
         "types:check": "npx tsc --noEmit -p tsconfig.json",
-        "serve": "nx serve"
+        "types:emit": "nx types:emit",
+        "types:fetch-remote": "nx types:fetch-remote"
     },
     "dependencies": {
         "react": "19.1.0",

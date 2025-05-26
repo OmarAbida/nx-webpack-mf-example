@@ -1,10 +1,11 @@
 {
     "name": "nx-webpack-mf-example",
     "version": "1.0.0",
-    "description": "",
+    "description": "An example of a monorepo built using Nx, React, Typescript and Webpack module federation.",
     "main": "index.js",
     "scripts": {
         "clean:dist": "rimraf dist",
+        "prune": "pnpm clean:dist && pnpm -r --if-present clean:mf-types && nx reset",
         "test": "echo 'Hello world!' > test-result.txt"
     },
     "keywords": [],

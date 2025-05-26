@@ -8,15 +8,13 @@
     },
     "license": "SEE LICENSE IN LICENSE.md",
     "scripts": {
-        "serve": "nx serve",
-        "serve-static": "nx serve-static",
-        "clean:dist": "rimraf dist",
-        "clean:mf-types": "rimraf @mf-types",
-        "clean:all": "rimraf dist && rimraf @mf-types",
         "build:dev": "nx build --configuration=development",
         "build:prod": "nx build --configuration=production",
+        "clean:mf-types": "rimraf @mf-types",
+        "serve": "nx serve",
+        "types:check": "npx tsc --noEmit -p tsconfig.json",
         "types:emit": "nx types:emit",
-        "types:check": "npx tsc --emitDeclarationOnly --noEmit -p tsconfig.json"
+        "types:fetch-remote": "nx types:fetch-remote"
     },
     "dependencies": {
         "react": "19.1.0",
